@@ -1,0 +1,1 @@
+INFO    2019-04-27 20:32:49,573 [main] com.revature.App  - This is info message
