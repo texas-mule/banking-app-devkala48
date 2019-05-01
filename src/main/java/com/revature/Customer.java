@@ -1,19 +1,18 @@
 package com.revature;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Customer {
 	
-	private String fName;
-	private String lName;
 	private Account account;
 	
 	Scanner customerObj = new Scanner(System.in);
+	ArrayList<String>jcustomerDetails = new ArrayList<>();
 
-    Customer(String firstName, String lastName, String number) {   
-        this.fName = firstName;
-        this.lName = lastName;
-    }
-    
     public Account getAccount() {
     	return account;
     }
@@ -22,34 +21,30 @@ public class Customer {
         this.account = acct;
     }
     
-	public void requestOpenAcc() {
+	public ArrayList<Account> requestOpenAcc(long userId) {
+		ArrayList<Account>details = new ArrayList<Account>();
+		System.out.println("Select Account type you want to open!\n"+"1.Single Account Holder\n"+"2.Joint Account.");
+		int accType = customerObj.nextInt();
+		String type;
+		if(accType == 1) { type = "Single";}else {type = "Joint";
+		System.out.println("Enter First name.");
+		jcustomerDetails.add(customerObj.next());
 		
-		System.out.println("Enter your First name.");
-		fName = customerObj.nextLine();
-		System.out.println("Enter your Last name.");
-		lName = customerObj.nextLine();
-		Customer.this.applicationResponse(fName, lName);
+		System.out.println("Enter Last name.");
+		jcustomerDetails.add(customerObj.next());
 		
-	}
-	public void applicationResponse(String customerFN, String customerLN) {
-		String response;
-		System.out.println("Press 1 to Accept\n" + "or" + "\nPress 2 to Decline.");
-		response = this.customerObj.next();
-		if(response.equals("1")) {
-			Customer.this.openAcc(customerFN, customerLN);
-		}else {
-			Customer.this.denyAcc();
+		System.out.println("Enter Email.");
+		jcustomerDetails.add(customerObj.next());
+		
+		System.out.println("Enter Username.");
+		jcustomerDetails.add(customerObj.next());
+		
+		System.out.println("Enter Password.");
+		jcustomerDetails.add(customerObj.next());
 		}
+		Staff staff = new Staff();
+		staff.getResponse(userId, type, jcustomerDetails);
+		return details;
 	}
-	public void openAcc(String customerFN, String customerLN) {
-		System.out.println("account created");
-	}
-	public void denyAcc() {
-		System.out.println("Application has been denied.");
-	}
-	public String customerAccount(Customer customer) {
-		
-		return fName;
-		
-	}
+	
 }

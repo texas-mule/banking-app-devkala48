@@ -1,7 +1,7 @@
 package com.revature;
 
 public interface AuthInterface {
-	boolean login(String username, String password, String userRole);
+	long login(String username, String password);
 	void logout();
-	void register();
+	long register(String fName, String lName, String email, String username, String password);
 }

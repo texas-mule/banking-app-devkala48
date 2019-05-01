@@ -1,65 +1,105 @@
 package com.revature;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class UsersAuth implements AuthInterface{
 	String fName;
 	String lName;
-	int userId = 0;
+	private long userId = 0;
 	String email;
-	String userRole;
+	private String username;
+	private String password;
+	private int userRole;
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 	Scanner userObj = new Scanner(System.in);
+
 	@Override
-	public void register() {
-		System.out.println("Enter your First name.");
-		fName = userObj.next();
-		System.out.println("Enter your Last name.");
-		lName = userObj.next();
-		System.out.println("Enter your Email.");
-		email = userObj.next();
-		System.out.println("Please! Select User Role.");
-		userRole = userObj.next().toUpperCase();
-		if(userRole.equals("ADMIN")) {
-		 userRole = "Admin";
-		}else if (userRole.contentEquals("EMPLOYEE")) {
-			userRole = "Employee";
-		}else {
-			userRole = "Customer";
-		}
+	public long register(String fName, String lName, String email, String username, String password) {
+		String sql;
+//		customer role
+		userRole = 3;
+		PreparedStatement prepStmt = null;
+		Connection con = ConnectionConfiguration.getConnection();
+        try{
+        	con.setAutoCommit(false);
+            prepStmt = con.prepareStatement("SELECT  username from logins WHERE username=?");
+            prepStmt.setString(1, username);
+            ResultSet rs = prepStmt.executeQuery();
+            
+            if (rs.next() == false) { 
+            	sql = "INSERT  into users (fname, lname, email, registration_date, role_id) VALUES (?,?,?,?,?)";
+            	try {
+	            	prepStmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	            	prepStmt.setString(1, fName);
+	            	prepStmt.setString(2, lName);
+	            	prepStmt.setString(3, email);
+	            	prepStmt.setTimestamp(4, timestamp);
+	            	prepStmt.setInt(5, userRole);  
+	            	prepStmt.executeUpdate();
+	            	
+	            	try (ResultSet key = prepStmt.getGeneratedKeys()) {
+	                    if (key.next()) {
+	                    	userId = key.getLong(1);
+	                    	sql = "INSERT  into logins (user_id, username, hash_password, salt_password) VALUES (?,?,?,?)";
+	    	            	
+	                    	PreparedStatement logStmt = con.prepareStatement(sql);
+	    	            	logStmt.setLong(1, key.getLong(1));
+	    	            	logStmt.setString(2, username);
+	    	            	logStmt.setString(3, password);
+	    	            	logStmt.setString(4, password);  
+	    	            	logStmt.executeUpdate();
+	    	            	logStmt.close();
+	                    }
+	                    else {
+	                        System.out.println("Couldn't get User ID.");
+	                    }
+	                    key.close();
+	                }catch(SQLException se) {
+	                	 se.printStackTrace();
+	                }
+	            	prepStmt.close();
+	            	con.commit();
+	            }catch(SQLException se) {
+	            	 se.printStackTrace();
+	            }
+            }else { 
+            	System.out.println("Username already exist!");		
+            }
+            con.rollback();
+           }catch (SQLException e) {
+	    	  System.out.println(e.getMessage());
+           }
+		return userId;
 	}
 	@Override
-	public boolean login(String username, String password, String userRole) {
-		boolean authentication = false;
-		try(BufferedReader br = new BufferedReader(new FileReader("user.txt"))) {
-		    String line = br.readLine();
-		    String txtUser = line.split(" ")[0].toLowerCase();
-		    String txtPass =line.split(" ")[1].toLowerCase();
-		    if (username.equals(txtUser) && password.equals(txtPass)) {
-		    	authentication = true;
-		        System.out.print(userRole +" logged In.");   
-		    } else {
-		    	authentication = false;
-		        System.out.print("Doesn't match the user or password."); 
-		    }
-		    return authentication;
-		} catch (FileNotFoundException e) { 
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public long login(String username, String password) {
+		
+		String sql = "SELECT username, user_id FROM logins where username=" + "'"+username+"'";
+		Connection con = ConnectionConfiguration.getConnection();
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				userId = rs.getInt("user_id");
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
-		return authentication;    
+		return userId;    
 	}
 	@Override
 	public void logout() {
 		
 	}
-	public boolean option() {
-		boolean userStatus = false;
+	public long option() {
 		boolean okay;
 		do{
 			System.out.println("Please!\n"+"Press 1 to Login.\n"+"Press 2 to Register.");
@@ -71,19 +111,29 @@ public class UsersAuth implements AuthInterface{
 						
 				System.out.println("Enter Password.");
 				String password = userObj.next();
-					
-				System.out.println("User Role.");
-				String userrole = userObj.next();
-				userStatus = login(username, password, userrole);
+				userId = login(username, password);
 				okay=true;
 			}else if(ch==2) {
-					register();
-					System.out.println("Name : " +fName + " " + lName + "\nRole :" + userRole);
-					okay = true;
+				System.out.println("Enter First name.");
+				fName = userObj.next();
+				
+				System.out.println("Enter Last name.");
+				lName = userObj.next();
+				
+				System.out.println("Enter Email.");
+				email = userObj.next();
+				
+				System.out.println("Enter Username.");
+				username = userObj.next();
+				
+				System.out.println("Enter Password.");
+				password = userObj.next();
+				userId = register(fName, lName, email, username, password);
+				okay = true;
 			}else {
 				okay = false;
 			}
 		}while(!okay);
-		return userStatus;		
+		return userId;		
 	}
 }

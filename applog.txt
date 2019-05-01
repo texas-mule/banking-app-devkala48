@@ -1,1 +1,39 @@
 INFO    2019-04-27 20:32:49,573 [main] com.revature.App  - This is info message
+INFO    2019-04-30 20:43:02,196 [main] com.revature.App  - This is info message
+INFO    2019-04-30 20:44:23,315 [main] com.revature.App  - This is info message
+INFO    2019-04-30 20:44:33,572 [main] com.revature.App  - This is info message
+INFO    2019-04-30 20:45:31,839 [main] com.revature.App  - This is info message
+INFO    2019-04-30 20:47:04,385 [main] com.revature.App  - This is info message
+INFO    2019-05-01 06:20:15,133 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:21:54,882 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:23:09,170 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:25:05,565 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:37:59,107 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:39:48,390 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:43:38,462 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:44:29,204 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:49:10,575 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:50:05,607 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 06:50:44,073 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 09:37:58,051 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:05:11,779 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:07:35,533 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:11:36,859 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:12:32,532 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:13:15,453 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:21:54,353 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:23:08,978 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:24:16,778 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:24:53,370 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:26:14,512 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:26:58,062 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:30:54,753 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:40:20,554 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:41:30,441 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:41:53,420 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 10:53:54,586 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 11:00:47,559 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 11:03:41,909 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 11:11:08,625 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 11:12:34,489 [main] com.revature.App  - Application Executed Successfully.
+INFO    2019-05-01 11:13:02,654 [main] com.revature.App  - Application Executed Successfully.
